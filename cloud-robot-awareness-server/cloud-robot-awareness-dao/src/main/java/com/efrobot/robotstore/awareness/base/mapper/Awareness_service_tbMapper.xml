@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efrobot.robotstore.awareness.base.dao.Awareness_service_tbMapper" >
+ 
+  <resultMap id="BResultMap" type="com.efrobot.robotstore.awareness.base.pojo.AwarenessVO" >
+
+     <result column="robot_id" property="robot_id" jdbcType="VARCHAR" />
+     <result column="device_id" property="device_id" jdbcType="VARCHAR" />
+     <result column="awareness_name" property="awareness_name" jdbcType="VARCHAR" />
+     
+     <result column="awareness_url" property="awareness_url" jdbcType="VARCHAR" />
+     <result column="awareness_param" property="awareness_param" jdbcType="VARCHAR" />
+     <result column="awareness_feedback" property="awareness_feedback" jdbcType="VARCHAR" />
+     <result column="service_start_time" property="service_start_time" jdbcType="TIMESTAMP" />
+     <result column="service_end_time" property="service_end_time" jdbcType="TIMESTAMP" />
+     <result column="service_status" property="service_status" jdbcType="VARCHAR" />
+     <result column="awareness_b_url" property="awareness_b_url" jdbcType="VARCHAR" />
+     
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    robot_id, device_id, awareness_name,awareness_url,awareness_param,awareness_feedback,service_start_time,service_end_time,service_status
+  </sql>
+  
+  
+  
+     <select id="selectByAwareness" resultMap="BResultMap"  parameterType="com.efrobot.robotstore.awareness.base.pojo.AwarenessParamVO">
+        SELECT rast.robot_id,rast.device_id,
+        ast.awareness_name,ast.awareness_url,
+        ras.awareness_param,ras.awareness_feedback,
+        rast.service_start_time,rast.service_end_time,rast.service_status,ast.awareness_b_url
+             from awareness_service_tb as ast LEFT OUTER JOIN 
+        robot_awareness_service_conf_tb as ras on ast.id=ras.awareness_id 
+        LEFT OUTER JOIN robot_awareness_service_tb as rast  on ast.id=rast.awareness_id
+        <where> 
+          <if test="awareness_type != null  and area_code != null" >
+             ast.awareness_type=#{awareness_type,jdbcType=VARCHAR}  and rast.area_code=#{area_code,jdbcType=VARCHAR}
+          </if>  
+        </where>  
+     </select>
+  
+</mapper>

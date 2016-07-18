@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			http://www.springframework.org/schema/security 
+			http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+  <!--要保护应用程序中的所有URL，只有拥有配置中指定的角色的用户才能访问 -->
+  <!--在3.1以上版本不在支持filter="none"使用此方案替代-->
+  <security:http pattern="/login.jsp*" security="none">
+  </security:http>
+  <security:http auto-config='true' access-denied-page="/accessDenied.jsp">
+  	<security:form-login login-page="/login.jsp" />
+  	<security:intercept-url pattern="/index.jsp*" access="ROLE_ADMIN,ROLE_USER" />
+  	<security:intercept-url pattern="/admin.jsp*" access="ROLE_ADMIN" />
+  	<!-- 
+  	<security:intercept-url pattern="/**" access="ROLE_USER,ROLE_ADMIN" />
+  	 -->
+    <security:http-basic />
+  </security:http>
+  
+	<!--配置认证管理器-->
+	<security:authentication-manager>
+	        <security:authentication-provider >
+	        		<security:password-encoder hash="md5"/>
+			<security:jdbc-user-service data-source-ref="dataSource"/>        		 
+	        </security:authentication-provider>
+	</security:authentication-manager>  
+</beans>
+

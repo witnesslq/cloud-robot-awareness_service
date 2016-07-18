@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+	<display-name>cloud-robot-awareness-business</display-name>
+	<context-param>
+	  <param-name>webAppRootKey</param-name>
+	  <param-value>cloud-robot-awareness-business.root</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>contextConfigLocation</param-name>
+	  <param-value>classpath:spring.xml</param-value>
+	</context-param>
+	<listener>
+	  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<filter>
+	  <filter-name>CharacterEncodingFilter</filter-name>
+	  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	  <init-param>
+	    <param-name>encoding</param-name>
+	    <param-value>UTF-8</param-value>
+	  </init-param>
+	  <init-param>
+	    <param-name>forceEncoding</param-name>
+	    <param-value>true</param-value>
+	  </init-param>
+	</filter>
+	<filter-mapping>
+	  <filter-name>CharacterEncodingFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+<!--  
+
+
+
+<filter>
+	  <filter-name>LoginFilter</filter-name>
+	  <filter-class>com.efrobot.robotstore.corpus.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	-->
+	
+	
+	<!-- 从账户系统获取验证码 开始-->
+	<servlet>
+	  <servlet-name>KaptchaServletForAccountSystem</servlet-name>
+	  <servlet-class>com.efrobot.toolkit.util.web.servlet.KaptchaServletForAccountSystem</servlet-class>
+	  <init-param>
+	    <param-name>kaptchaServerUrl</param-name>
+	    <param-value>http://www.account.efrobot.com/verifycode</param-value>
+	  </init-param>	
+	</servlet>	
+	<servlet-mapping>
+	  <servlet-name>KaptchaServletForAccountSystem</servlet-name>
+	  <url-pattern>/code</url-pattern>
+	</servlet-mapping>	    
+	<!-- 从账户系统获取验证码结束 -->
+	
+	
+	<!-- 登录过滤器开始
+	<filter>
+	 <filter-name>LoginFilter</filter-name>
+	 <filter-class>com.efrobot.toolkit.util.web.filter.LoginFilter</filter-class>
+	 <init-param>
+	     <description>将当前登录的用户的信息保存在 session 中时使用的key，如果没有配置此参数，则该过滤器不起作用</description>
+	     <param-name>sessionKey</param-name>
+	     <param-value>user</param-value>
+	 </init-param>
+	  <init-param>
+	     <param-name>ignoreUrlRegex</param-name>
+	     <param-value>^(/v1/order/verifyRecommendId/\w*)|(/v1/address/\w*)|(/v1/order/form/addOrder)|(/v1/order/form/getOrderResultInfo)|(/v1/order/robotNotify)|(/v1/order/getMobileVerifyCode)|(/v1/order/saveUser)|(/v1/order/form/getOrderStatus)|(/v1/order/getStoreQrCode)|(/v1/order/getqr)$</param-value>
+	 </init-param>
+	 <init-param>
+	     <param-name>loginUrl</param-name>
+	     <param-value>/login.jsp</param-value>
+	 </init-param>
+	</filter>
+	
+	<filter-mapping>
+	 <filter-name>LoginFilter</filter-name>
+	 <url-pattern>/v1/*</url-pattern>
+	</filter-mapping> -->
+	
+	<!-- 登录过滤器结束 -->
+	
+	<!-- 从账户系统获取验证码 开始
+	<servlet>
+	  <servlet-name>KaptchaServletForAccountSystem</servlet-name>
+	  <servlet-class>com.efrobot.toolkit.util.web.servlet.KaptchaServletForAccountSystem</servlet-class>
+	  <init-param>
+	    <param-name>kaptchaServerUrl</param-name>
+	    <param-value>http://account.efrobot.com/verifycode</param-value>
+	  </init-param>	
+	</servlet>	
+	<servlet-mapping>
+	  <servlet-name>KaptchaServletForAccountSystem</servlet-name>
+	  <url-pattern>/code</url-pattern>
+	</servlet-mapping>	    -->
+	
+	<!-- 从账户系统获取验证码结束 -->
+	
+	<!-- 订单系统验证码 
+	<servlet>  
+	    <servlet-name>Kaptcha</servlet-name>  
+	    <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>  
+	    <init-param>  
+	        <param-name>kaptcha.image.width</param-name>  
+	        <param-value>200</param-value>  
+	    </init-param>  
+	    <init-param>  
+	        <param-name>kaptcha.image.height</param-name>  
+	        <param-value>50</param-value>  
+	    </init-param>  
+	    <init-param>  
+	        <param-name>kaptcha.textproducer.char.length</param-name>  
+	        <param-value>4</param-value>  
+	    </init-param>  
+	    <init-param>  
+	        <param-name>kaptcha.noise.impl</param-name>  
+	        <param-value>com.google.code.kaptcha.impl.NoNoise</param-value>  
+	    </init-param>  
+	</servlet> 
+	<servlet-mapping>
+	  <servlet-name>Kaptcha</servlet-name>
+	  <url-pattern>/getVerifyCode</url-pattern>
+	</servlet-mapping>	  -->
+	<!--  订单系统验证码结束 -->
+	
+	<servlet>
+	  <servlet-name>springmvc</servlet-name>
+	  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	  <init-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>classpath*:/spring-servlet.xml</param-value>
+	  </init-param>
+	  <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>springmvc</servlet-name>
+	  <url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 
+	<servlet>
+	  <servlet-name>DruidStatView</servlet-name>
+	  <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>DruidStatView</servlet-name>
+	  <url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	 -->
+	
+	<context-param>
+	  <param-name>log4jConfigLocation</param-name>
+	  <param-value>classpath:log4j.properties</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>log4jRefreshInterval</param-name>
+	  <param-value>18000</param-value>
+	</context-param>
+	<listener>
+	  <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+</web-app>
