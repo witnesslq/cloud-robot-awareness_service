@@ -34,11 +34,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.efrobot.robotstore.awareness.base.dao.Awareness_service_tbMapper;
+
 import com.efrobot.robotstore.awareness.base.pojo.AwarenessVO;
 import com.efrobot.robotstore.awareness.base.pojo.Robot_awareness_service_tb;
 import com.efrobot.robotstore.awareness.business.service.AwarenessService;
-import com.efrobot.robotstore.awareness.business.service.WeatherService;
 import com.efrobot.robotstore.awareness.util.StringFilter;
 import com.efrobot.robotstore.awareness.util.UserBean;
 import com.efrobot.toolkit.util.security.MD5;
@@ -62,31 +61,8 @@ public class AwarenessController extends BaseController {
 	@Autowired
 	@Qualifier("awarenessServiceImpl")
 	private AwarenessService awarenessServiceImpl;
-	
-	@Autowired
-	///@Qualifier("weatherServiceImpl")
-	private WeatherService weatherServiceImpl;
 
-	
-	@RequestMapping(value = "/form/getTest", method = RequestMethod.GET, produces = {
-			"application/json;charset=UTF-8" })
-	@ResponseBody
-	public Map<String, Object> getTest(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setCharacterEncoding("utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		
-		Map<String, Object> weatherContext=weatherServiceImpl.getWeatherServer("");
-		System.out.println("weatherServiceImpl......."+weatherContext);
-		
-		
-		response.setCharacterEncoding("utf-8");
 
-		return null;
-	}
-	
 	
 	
 	@RequestMapping(value = "/form/getWeatherServer_business", method = RequestMethod.GET, produces = {
@@ -132,10 +108,10 @@ public class AwarenessController extends BaseController {
 				///	if (null!=actionTime && actionTime.equals(currentTime)) {
 						System.out.println("jkjkfddddddddddddddddddddddddd"+awarenessVO.getAwareness_business_url());
 						
-						Map<String, Object> weatherContext=weatherServiceImpl.getWeatherServer("");
-						System.out.println("weatherServiceImpl......."+weatherContext);
-						
-						
+//						Map<String, Object> weatherContext=weatherServiceImpl.getWeatherServer("");
+//						System.out.println("weatherServiceImpl......."+weatherContext);
+//						
+//						
 						
 //					    MultiValueMap<String, Object> param = new LinkedMultiValueMap<String, Object>();
 //			   		    param.add("cityName","");
